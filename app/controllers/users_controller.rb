@@ -17,6 +17,7 @@ class UsersController < ApplicationController
       flash[:success] = "User successfully saved."
       redirect_to users_path
     else
+      flash[:danger] = "Please try again."
       render :new
     end
   end
@@ -28,8 +29,10 @@ class UsersController < ApplicationController
   def update
     @user = User.find(params[:id])
     if @user.update(user_params)
+      flash[:success] = "User successfully updated."
       redirect_to user_path(@user)
     else
+      flash[:danger] = "Try again, bad parameters."
       render :edit
     end
   end
@@ -37,6 +40,7 @@ class UsersController < ApplicationController
   def destroy
     @user = User.find(params[:id])
     @user.destroy
+    flash[:success] = "User successfuly deleted."
     redirect_to users_path
   end
 

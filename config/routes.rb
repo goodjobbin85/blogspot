@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+=begin
  root 'static_pages#home'
   get 'users', to: "users#index"
   get 'users/new', to: "users#new", as: "new_user"
@@ -7,6 +8,15 @@ Rails.application.routes.draw do
   get 'users/:id/edit', to: "users#edit", as: "edit_user"
   patch 'users/:id', to: "users#update"
   delete 'users/:id', to: 'users#destroy'
+
+  get 'articles', to: "articles#index"
+=end
+
+root 'static_pages#home'
+
+	resources :users do 
+		resources :articles
+	end
 end
   
  

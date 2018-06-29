@@ -7,7 +7,7 @@
 <div class="container">
 	<% @user.articles.each do |article| %>
 		<div class="well well-sm">
-			<h3>Article <strong><%= article.id %>: </strong><%= article.title %></h3>
+			<h3>Article <strong><%= article.id %>: </strong><%= link_to article.title, user_article_path(article.user, article) %></h3>
 			<small><%= link_to "Delete Comment", [article.user, article],
 			method: :delete, data: { confirm: "Are you sure?" } %></small>
 		</div>

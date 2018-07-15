@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+  get 'sessions/new'
+
+  get 'sessions/destroy'
+
 =begin
  root 'static_pages#home'
   get 'users', to: "users#index"
@@ -12,11 +16,17 @@ Rails.application.routes.draw do
   get 'articles', to: "articles#index"
 =end
 
-root 'static_pages#home'
+	root 'static_pages#home'
 
 	resources :users do 
 		resources :articles
 	end
+
+	get 'login', to: "sessions#new", as: "login"
+  post 'login', to: "sessions#create"
+	get 'logout', to: "sessions#destroy", as: "logout"
+
+  resources :sessions
 end
   
  

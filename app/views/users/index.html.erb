@@ -1,6 +1,8 @@
 <h1 align="center">All Current Bloggers</h1>
 <%= link_to "Home", root_path %>
 <%= link_to "Create New Blogger", new_user_path %>
+<h3> Page viewed <%= session[:requests] %> times. </h3>
+<%= show_session_requests %>
 
 <table class="table table-bordered">
 	<thead>

@@ -12,4 +12,8 @@ module SessionsHelper
   	@current_user ||= User.find(session[:user_id]) if session[:user_id]
   end
 
+  def show_session_requests 
+   	"number of requests is #{session[:requests]}"
+  end
+
 end

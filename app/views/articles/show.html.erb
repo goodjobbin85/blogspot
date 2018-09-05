@@ -2,6 +2,6 @@
 	<h1>Article #<%= @article.id %></h1>
 	<p><%= @article.title %></p>
 	<p><%= @article.description %></p>
-
+	<p>Created: <%= time_ago_in_words(@article.created_at) %></p>
 	<h2>Comments</h2>
 </div>

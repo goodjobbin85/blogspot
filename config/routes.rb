@@ -1,15 +1,4 @@
 Rails.application.routes.draw do
-  get 'categories/index'
-
-  get 'categories/show'
-
-  get 'categories/new'
-
-  get 'categories/edit'
-
-  get 'categories/update'
-
-  get 'categories/destroy'
 
   get 'sessions/new'
 
@@ -39,6 +28,7 @@ Rails.application.routes.draw do
 	get 'logout', to: "sessions#destroy", as: "logout"
 
   resources :sessions
+  resources :categories
 end
   
  

@@ -7,5 +7,13 @@
 		<p><%= category.name %></p>
 	<% end %>
 	<p>Created: <%= time_ago_in_words(@article.created_at) %></p>
+
+	<% if @article_user.id == current_user.id %>
+		<%= link_to "Edit Article", edit_user_article_path(@article) %>
+		<%= link_to "Delete Article", user_article_path(@article),
+					method: :delete, data: { confirm: "Are you sure?" } %>
+	<% end %>
+
 	<h2>Comments</h2>
+
 </div> 

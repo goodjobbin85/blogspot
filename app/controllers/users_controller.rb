@@ -1,10 +1,14 @@
 class UsersController < ApplicationController
+
+  before_action :set_user, only: [:show, :edit, :update, :destroy]
+  before_action :require_same_user, only: [:edit, :update]
+  before_action :require_admin, only: [:destroy]
+
   def index
     @users = User.all
   end
 
   def show
-    @user = User.find(params[:id])
     @articles = @user.articles
   end
 
@@ -25,11 +29,10 @@ class UsersController < ApplicationController
   end
 
   def edit
-    @user = User.find(params[:id])
+
   end
 
   def update
-    @user = User.find(params[:id])
     if @user.update(user_params)
       flash[:success] = "User successfully updated."
       redirect_to user_path(@user)
@@ -40,9 +43,9 @@ class UsersController < ApplicationController
   end
 
   def destroy
-    @user = User.find(params[:id])
+    logout(@user)
+    flash[:success] = "#{@user.name} successfuly deleted."
     @user.destroy
-    flash[:success] = "User successfuly deleted."
     redirect_to users_path
   end
 
@@ -50,6 +53,24 @@ class UsersController < ApplicationController
 
   def user_params
     params.require(:user).permit(:name, :email, :password, :password_confirmation)
+  end
+
+  def set_user 
+    @user = User.find(params[:id])
+  end
+
+  def require_same_user 
+    if current_user != @user
+      flash[:danger] = "Must own this account to perform this action."
+      redirect_to users_path
+    end
+  end
+
+  def require_admin
+    if logged_in? and (!current_user.admin? && current_user != @user)
+      flash[:danger] = "Must be admin to perform this action."
+      redirect_to users_path
+    end
   end
 
 

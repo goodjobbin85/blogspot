@@ -1,4 +1,5 @@
-<h2>Information for <%= @user.name %><h2>
+<h2>Information for <%= @user.name %> | <%= link_to "Edit Account", edit_user_path(@user) %>
+	| <%= link_to "Delete Account", user_path(@user), method: :delete, data: { confirm: "Are you sure?" } %><h2> 
 
 
 <ul>
@@ -10,9 +11,12 @@
 	<% @user.articles.each do |article| %>
 		<div class="well well-sm">
 			<h3>Article <strong><%= article.id %>: </strong><%= link_to article.title, user_article_path(article.user, article) %></h3>
-			<p><small>Created At: <%= time_ago_in_words(article.created_at) %></small></p>
-			<small><%= link_to "Delete Article", [article.user, article],
-			method: :delete, data: { confirm: "Are you sure?" } %></small>
+			<p><small>Created: <%= time_ago_in_words(article.created_at) %> ago.</small></p>
+
+			<% if @user.id == current_user.id %>
+				<small><%= link_to "Delete Article", [article.user, article],
+				method: :delete, data: { confirm: "Are you sure?" } %></small>
+			<% end %>
 		</div>
 	<% end %>
 </div>
@@ -28,6 +32,11 @@ local: true) do |f| %>
 	<p>
 		<%= f.label :description %>
 		<%= f.text_area :description %>
+	</p>
+
+	<p>
+		<%= f.label :categories %>
+		<%= f.text_area :categories %>
 	</p>
 
 	<p>

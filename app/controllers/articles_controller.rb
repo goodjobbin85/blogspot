@@ -5,6 +5,7 @@ class ArticlesController < ApplicationController
 
 	def show 
 		@article = Article.find(params[:id])
+		@article_user = @article.user
 	end
 
 	def create
@@ -19,9 +20,25 @@ class ArticlesController < ApplicationController
 		end
 	end
 
+	def edit 
+		@article = Article.find(params[:id])
+	end
+
+	def update
+		@article = Article.find(params[:id])
+		@user = @article.user
+		@article.update(article_params)
+		if @article.save
+			flash[:success] = "Article successfully updated!"
+			redirect_to user_path(@user)
+		else
+			render :edit 
+		end
+	end
+
 	def destroy 
-		@user = User.find(params[:user_id])
-		@article = @user.articles.find(params[:id])
+		@article = Article.find(params[:id])
+		@user = @article.user
 		if @article.destroy
 			flash[:success] = "Article succesfully eliminated."
 			redirect_to user_path(@user)

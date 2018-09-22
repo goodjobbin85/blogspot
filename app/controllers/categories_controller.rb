@@ -1,5 +1,6 @@
 class CategoriesController < ApplicationController
   before_action :set_category, only: [:show, :edit, :update, :destroy]
+  before_action :require_admin, except: [:index, :show]
   def index
     @categories = Category.all
   end
@@ -15,7 +16,7 @@ class CategoriesController < ApplicationController
   def create 
     @category = Category.new(category_params)
     if @category.save
-      flash[:success] = "Article Successfully save!"
+      flash[:success] = "Article Successfully saved!"
       redirect_to categories_path
     else
       flash[:notice] = "A problem has occurred. Please try again."
@@ -37,7 +38,7 @@ class CategoriesController < ApplicationController
 
   def destroy
     if @category.destroy
-      flash[:success] = "Category '#{@category.name} successfully removes.'"
+      flash[:success] = "Category: '#{@category.name}' successfully removed."
       redirect_to categories_path
     else
       redirect_to categories_path
@@ -52,6 +53,15 @@ class CategoriesController < ApplicationController
 
   def set_category
     @category = Category.find(params[:id])
+  end
+
+  private 
+
+  def require_admin
+    if !current_user.admin?
+      flash[:danger] = "Must be admin to perform this task."
+      redirect_to categories_path
+    end
   end
 
   

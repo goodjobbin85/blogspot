@@ -12,7 +12,7 @@
 		<div class="well well-sm">
 			<h3>Article <strong><%= article.id %>: </strong><%= link_to article.title, user_article_path(article.user, article) %></h3>
 			<p><small>Created: <%= time_ago_in_words(article.created_at) %> ago.</small></p>
-
+	
 			<% if @user.id == current_user.id %>
 				<small><%= link_to "Delete Article", [article.user, article],
 				method: :delete, data: { confirm: "Are you sure?" } %></small>

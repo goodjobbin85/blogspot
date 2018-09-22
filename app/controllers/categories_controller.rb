@@ -16,7 +16,7 @@ class CategoriesController < ApplicationController
   def create 
     @category = Category.new(category_params)
     if @category.save
-      flash[:success] = "Article Successfully saved!"
+      flash[:success] = "Category Successfully saved!"
       redirect_to categories_path
     else
       flash[:notice] = "A problem has occurred. Please try again."

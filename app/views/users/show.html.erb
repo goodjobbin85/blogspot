@@ -10,7 +10,7 @@
 <div class="container">
 	<% @user.articles.each do |article| %>
 		<div class="well well-sm">
-			<h3>Article <strong><%= article.id %>: </strong><%= link_to article.title, user_article_path(article.user, article) %></h3>
+			<h3>Article <strong><%= article.id %>: </strong><%= link_to article.title, user_article_path(article.user, article) %> <small>created by: <%= article.user.name %></small></h3>
 			<p><small>Created: <%= time_ago_in_words(article.created_at) %> ago.</small></p>
 	
 			<% if @user.id == current_user.id %>
@@ -22,7 +22,7 @@
 </div>
 
 <h2>Create New Article </h2>
-<%= form_with(model: [@user, @user.articles.build ],
+<%= form_with(model: [current_user, current_user.articles.build ],
 local: true) do |f| %>
 	<p>
 		<%= f.label :title, "Title" %>

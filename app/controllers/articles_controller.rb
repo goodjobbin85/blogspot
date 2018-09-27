@@ -1,43 +1,43 @@
 class ArticlesController < ApplicationController
+	before_action :set_article, except: [:index, :create]
+	before_action :require_same_user, only: [:edit, :update]
+	before_action :require_admin, only: [:destroy]
+
 	def index
 		@articles = Article.all
 	end
 
 	def show 
-		@article = Article.find(params[:id])
 		@article_user = @article.user
 	end
 
 	def create
-		@user = User.find(params[:user_id])
-		@article = @user.articles.create(article_params)
+		@article = Article.new(article_params)
+		@article.user = current_user
 		if @article.save
 			flash[:success] = "Article successfully created!"
-			redirect_to user_path(@user)
+			redirect_to user_path(current_user)
 		else
 			flash[:danger] = "Please provide correct parameters."
-			redirect_to user_path(@user)
+			redirect_to user_path(current_user)
 		end
 	end
 
 	def edit 
-		@article = Article.find(params[:id])
+
 	end
 
 	def update
-		@article = Article.find(params[:id])
-		@user = @article.user
 		@article.update(article_params)
 		if @article.save
 			flash[:success] = "Article successfully updated!"
-			redirect_to user_path(@user)
+			redirect_to user_path(current_user)
 		else
 			render :edit 
 		end
 	end
 
 	def destroy 
-		@article = Article.find(params[:id])
 		@user = @article.user
 		if @article.destroy
 			flash[:success] = "Article succesfully eliminated."
@@ -52,6 +52,24 @@ class ArticlesController < ApplicationController
 
 	def article_params
 		params.require(:article).permit(:title, :description)
+	end
+
+	def set_article 
+		@article = Article.find(params[:id])
+	end
+
+	def require_same_user 
+	    if current_user != @article.user
+	      flash[:danger] = "Must own this account to perform this action."
+	      redirect_to users_path
+	    end
+	end
+
+	def require_admin
+	    if logged_in? and (!current_user.admin? && current_user != @user)
+	      flash[:danger] = "Must be admin to perform this action."
+	      redirect_to users_path
+	    end
 	end
 	
 end

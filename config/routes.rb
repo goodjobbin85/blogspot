@@ -1,5 +1,11 @@
 Rails.application.routes.draw do
 
+  get 'comments/index'
+
+  get 'comments/create'
+
+  get 'comments/destroy'
+
   get 'sessions/new'
 
   get 'sessions/destroy'
@@ -23,7 +29,9 @@ Rails.application.routes.draw do
 		resources :articles
 	end
 
-  resources :articles
+  resources :articles do 
+    resources :comments
+  end
 
 	get 'login', to: "sessions#new", as: "login"
   post 'login', to: "sessions#create"

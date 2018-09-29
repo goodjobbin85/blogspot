@@ -16,4 +16,11 @@
 
 	<h2>Comments</h2>
 
+	<% @article.comments.each do |comment| %>
+		<p>
+			<%= comment.content %> 
+			<small>Posted by: <%= link_to comment.user.name, user_path(comment.user) %> at <%= comment.created_at %></small>
+		</p>
+	<% end %>
+
 </div> 

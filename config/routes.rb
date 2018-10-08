@@ -1,15 +1,5 @@
 Rails.application.routes.draw do
 
-  get 'comments/index'
-
-  get 'comments/create'
-
-  get 'comments/destroy'
-
-  get 'sessions/new'
-
-  get 'sessions/destroy'
-
 =begin
  root 'static_pages#home'
   get 'users', to: "users#index"

@@ -4,10 +4,11 @@
 	<tr>
 	<% @categories.each do |category| %>
 		<td><%= link_to category.name, category_path(category) %></td>
-		
-		<td><%= link_to "Edit", edit_category_path(category) %></td>
-		<td><%= link_to "Delete", category_path(category), 
+		<% if logged_in? && current_user.admin? %>
+			<td><%= link_to "Edit", edit_category_path(category) %></td>
+			<td><%= link_to "Delete", category_path(category), 
 				method: :delete, data: { confirm: "Are you sure?" } %></td>
+		<% end %>
 	</tr>
 	<% end %>
 </table>

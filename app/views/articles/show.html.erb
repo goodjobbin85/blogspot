@@ -23,13 +23,9 @@
 		</p>
 	<% end %>
 
+	
 	<h3>New Comment</h3>
 
-	<%= form_for [@article, Comment.new] do |f| %>
-		<%= f.label :content  %>
-		<%= f.text_area :content, placeholder: "Give us your thoughts:" %>
-
-		<%= f.submit %>
-	<% end %>
-
+	<%= render 'comment_form' %>
+	
 </div> 

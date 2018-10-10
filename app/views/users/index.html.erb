@@ -11,7 +11,10 @@
 		</tr>
 	</thead>
 
+	<%= will_paginate %>
+
 	<tbody>
+
 		<% @users.each do |user| %>
 			<tr>
 				<td><%= link_to user.name, user_path(user) %></td>
@@ -23,6 +26,7 @@
 				<% end %>
 			</tr>
 		<% end %>
+
 	</tbody>
 	
 </table>

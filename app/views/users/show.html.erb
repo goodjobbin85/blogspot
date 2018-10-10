@@ -7,8 +7,9 @@
 	<li><%= @user.email %></li>
 </ul>
 
+<%= will_paginate @articles %>
 <div class="container">
-	<% @user.articles.each do |article| %>
+	<% @articles.each do |article| %>
 		<div class="well well-sm">
 			<h3>Article <strong><%= article.id %>: </strong><%= link_to article.title, user_article_path(article.user, article) %> <small>created by: <%= article.user.name %></small></h3>
 			<p><small>Created: <%= time_ago_in_words(article.created_at) %> ago.</small></p>

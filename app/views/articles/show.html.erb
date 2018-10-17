@@ -8,13 +8,22 @@
 	<% end %>
 	<p>Created: <%= time_ago_in_words(@article.created_at) %></p>
 
-	<% if @article_user.id == current_user.id %>
+	<% if logged_in? && @article_user.id == current_user.id %>
 		<%= link_to "Edit Article", edit_user_article_path(@article) %>
 		<%= link_to "Delete Article", user_article_path(@article),
 					method: :delete, data: { confirm: "Are you sure?" } %>
 	<% end %>
 
-	<h2>Comments</h2>
+	<% if @article.comments.any? %>
+		<h2>Comments</h2>
+	<% else %>
+		<h3>No Comments Yet.</h3>
+		<% if !logged_in? %>
+			Please <%= link_to "Log In", login_path %> or <%= link_to "Sign Up", new_user_path %> to comment.
+		<% else %>
+			Be the first to comment!
+		<% end %>
+	<% end %>
 
 	<% @article.comments.each do |comment| %>
 		<p>
@@ -23,9 +32,10 @@
 		</p>
 	<% end %>
 
-	
-	<h3>New Comment</h3>
+	<% if logged_in? %>
+		<h3>New Comment</h3>
 
-	<%= render 'comment_form' %>
+		<%= render 'comment_form' %>
+	<% end %>
 	
 </div> 

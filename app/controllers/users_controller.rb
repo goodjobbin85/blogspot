@@ -2,6 +2,7 @@ class UsersController < ApplicationController
 
   before_action :set_user, only: [:show, :edit, :update, :destroy]
   before_action :require_same_user, only: [:edit, :update]
+  before_action :require_logged_in, only: [:destroy]
   before_action :require_admin, only: [:destroy]
 
   def index
@@ -43,9 +44,11 @@ class UsersController < ApplicationController
   end
 
   def destroy
-    logout(@user)
     flash[:success] = "#{@user.name} successfuly deleted."
     @user.destroy
+    if current_user == @user
+      logout(@user)
+    end
     redirect_to users_path
   end
 

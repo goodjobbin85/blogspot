@@ -19,7 +19,7 @@
           <ul class="dropdown-menu">
             <ul>
               <% Category.all.each do |category| %>
-                <li><%= link_to category.name, category_path(category) %></li>
+                <li><%= link_to category.name, category_path(category) %>(<%= category.articles.count %>)</li>
               <% end %>
             </ul>
             <% if logged_in? && current_user.admin? %>

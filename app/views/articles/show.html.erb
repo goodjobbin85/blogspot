@@ -15,7 +15,7 @@
 	<% end %>
 
 	<% if @article.comments.any? %>
-		<h2>Comments</h2>
+		<h2>Comments(<%= @article.comments.count %>)</h2>
 	<% else %>
 		<h3>No Comments Yet.</h3>
 		<% if !logged_in? %>
